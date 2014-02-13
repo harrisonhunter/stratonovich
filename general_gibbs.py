@@ -4,35 +4,31 @@ General Gibbs Sampler
 Impliments the Gibbs Sampling Algorithm, a class of MCMC Algorithm
 
 Harrison
-
 '''
 
 import math
 import random
 import sys
 
-'''
-The Gibbs algorithm itself
+def gibbs_sample(iters, obj, update, init, verbose=False):
+    '''
+    The Gibbs algorithm itself
 
-ARGUMENTS:
- - iters: integer number of iterations for which to run algorithm
- - obj: objective function to be run on points to measure how "good"
-   they are
- - updates: a set of functions used to update the parameters
- - init: the first point to be used, should be in the form of the
-   argument/return value of next
- - verbose: whether or not to print info during the algorithm
+    ARGUMENTS:
+     - iters: integer number of iterations for which to run algorithm
+     - obj: objective function to be run on points to measure how "good"
+       they are
+     - updates: a set of functions used to update the parameters
+     - init: the first point to be used, should be in the form of the
+       argument/return value of next
+     - verbose: whether or not to print info during the algorithm
 
-RETURNS:
- - the markov chain of points visited
- - list of objective values of accepted points
- - best objective value reached
- - parameters that achieved best objective value
-
-'''
-
-def gibbs_sample(iters, obj, updates, init, verbose=False):
-
+    RETURNS:
+     - the markov chain of points visited
+     - list of objective values of accepted points
+     - best objective value reached
+     - parameters that achieved best objective value
+    '''
     accepted_points = [init]
     initial_score = obj(init)
     accepted_scores = [initial_score]
@@ -44,25 +40,22 @@ def gibbs_sample(iters, obj, updates, init, verbose=False):
 
     for i in xrange(iters):
         if verbose:
-            print "---------" + tagline + "--------"
-            print "iteration: "+str(i+startingIteration)
+            print "----------------------"
+            print "iteration: " + str(i)
             print "best score so far" + str(best_score_so_far)
             print '\n'
-
 
         # most recent accepted point, and its score
         last_point = accepted_points[i]
         last_point_score = accepted_scores[i]
         # point to be considered, and its score
-        candidate_point = next(last_point, whichBlock)
-        candidate_point_score = o(candidate_point)
+        candidate_point = update(last_point)
+        candidate_point_score = obj(candidate_point)
 
         # if necessary update best score seen and best parameters seen
         if candidate_point_score > best_score_so_far:
             best_score_so_far = candidate_point_score
             best_parameters_so_far = candidate_point
-
-
 
         # to avoid underflow, objective function may be the log of what we want,
         #   in which case we subtract and then exponentiate,
@@ -87,15 +80,14 @@ def gibbs_sample(iters, obj, updates, init, verbose=False):
         accepted_points.append(next_point)
         accepted_scores.append(next_score)
 
-    # calculate the fraction of candidates considered that were accepted
     acceptance_rate = float(candidates_accepted) / float(iters)
 
     if verbose:
-        print "***----" + tagline + "-----***"
+        print "***-----------------------***"
         print "best_parameters: "+str(best_parameters_so_far)
         print "best_score: "+str(best_score_so_far)
         print "acceptance_rate: "+str(acceptance_rate)
-        print "***-------" + "-"*len(tagline) + "--***"
+        print "***-----------------------***"
 
     return accepted_points, accepted_scores, acceptance_rate,\
      best_score_so_far, best_parameters_so_far
