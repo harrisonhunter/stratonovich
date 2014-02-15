@@ -10,5 +10,6 @@ Output:
 Inferences
 '''
 
-def calculate_inferences(config, trained_model, data):
-	pass
+def calc_inferences(config, trained_model, data):
+    ''' Caclulate all inferences'''
+    pass

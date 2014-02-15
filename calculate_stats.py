@@ -1,6 +1,7 @@
 '''
-
+Calculate stats on data
 '''
 
 def calc_stats(data):
-	pass
+    ''' calculate all stats for data '''
+    pass

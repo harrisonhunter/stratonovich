@@ -8,7 +8,9 @@ Model Selection
 '''
 
 def generate_configs():
-	pass
+    ''' generates all configs '''
+    return 0
 
 def model_selection(config, data):
-	pass
+    ''' select optimal model '''
+    pass

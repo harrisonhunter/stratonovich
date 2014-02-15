@@ -11,4 +11,5 @@ Objective value
 '''
 
 def objective_value(model, params, data):
-	pass
+    ''' calculate the objective function'''
+    pass

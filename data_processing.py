@@ -7,7 +7,9 @@ Output: Data ready for optimization
 '''
 
 def file_prep(file_path, prep_config):
-	pass
+    '''turn text files to data'''
+    pass
 
 def load_data(file_path):
-	pass
+    '''load precomiled data'''
+    pass

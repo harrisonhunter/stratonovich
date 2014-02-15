@@ -11,4 +11,5 @@ trained params for model
 '''
 
 def train_model(config, model, data):
-	pass
+    ''' estimate model params '''
+    pass
