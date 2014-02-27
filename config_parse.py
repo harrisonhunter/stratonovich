@@ -43,14 +43,14 @@ class Parameters:
 	def set_initial_params(self):
 		self.priors = self.init_priors.sample()
 		self.beta = self.init_beta.sample()
-		self.sigma = 1 / (self.init_root_sigma.sample() ** 2)
+		self.sigma = self.init_root_sigma.sample() ** (-1.0/2)
 		self.means = [self.init_means.sample() for i in xrange(self.d)]
 		self.trans = [self.init_trans[i].sample() for i in xrange(self.d)]
 
 
 def parse_config(path_to_config):
 	config_fields = ['comment', 'data_path', 'h_states', 'o_vars', 'which_vars', 'method', 'prior', 'o_states']
-	content = [line.strip() for line in open(path_to_config)]
+	content = [line.strip().split(" ")[1] for line in open(path_to_config)]
 	content = [int(content[i]) if i in [2, 3, 7] else [int(i) for i in content[4].split(',')] if i ==4 else content[i] for i in xrange(len(content))]
 	return dict(zip(config_fields, content))
 
@@ -64,7 +64,8 @@ def create_params_object(config):
 	return params
 	
 
-# config = parse_config('sample.config')
+config = parse_config('sample.config')
+print config
 # params = create_params_object(config)
 # params.set_initial_params()
 # print params.priors
