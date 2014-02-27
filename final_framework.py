@@ -8,6 +8,7 @@ Consists of 3 parts:
 2. Model Selection and Parameter Estimation
 
 3. Inferences
+
 '''
 
 from data_processing import file_prep as prep
@@ -18,7 +19,8 @@ from helper import model_selection
 from train import train_model
 from calculate_stats import calc_stats
 
-def main(file_path, prep_config, aggregated=False, stats=False, stats_config=None, configs=True):
+def main(file_path, prep_config, aggregated=False, stats=False, stats_config=None, configs=True,
+    output_file=None):
     ''' main function!
     Inputs:
     file_path - string - path to text files or compiled files
@@ -51,4 +53,7 @@ def main(file_path, prep_config, aggregated=False, stats=False, stats_config=Non
         trained_models.append(train_model(config, model, data))
         inferences.append(calc_inferences(config, trained_model, data))
 
+    if output_file != None:
+        helper.write_results(output_file, data_stats, trained_models, inferences)
+        
     return (data_stats, trained_models, inferences)

@@ -5,6 +5,8 @@ Generate configs
 
 Model Selection
 
+Write results
+
 '''
 
 def generate_configs():
@@ -14,3 +16,7 @@ def generate_configs():
 def model_selection(config, data):
     ''' select optimal model '''
     pass
+
+def write_results(output_file, data_stats, trained_models, inferences):
+	''' Wrte all outputs to specified file '''
+	pass
