@@ -7,8 +7,10 @@ Gaussian
 Dirichlet
 Weibull
 '''
-
+import random
+import numpy as np
 import numpy.random as npr
+from forward_backwards import forward_backward
 
 class Normal:
     def __init__(self, init_mean, init_std):
@@ -73,6 +75,9 @@ class UpdateFunctions():
     def __init__(self, params):
         self.params = params
 
+    def forward_backwards(self):
+        return forward_backward(self.params.trans, self.params.means, self.params.sigma, self.params.priors, self.params.ys, self.params.d)
+
     def get_I(self, i):
         return sum([1 if self.params.x[0] == i else 0])
 
@@ -83,7 +88,7 @@ class UpdateFunctions():
         return sum([1 for k in xrange(self.params.n) if self.params.x[k-1] == i and self.params.x[k] == j])
 
     def get_s(self, i):
-        return 1
+        return sum([self.params.y[k] for k in xrange(self.params.n) if self.params.x[k] == i])
 
     def eq_1(self):
         Is = [self.get_I(i) for i in xrange(self.params.d)]
@@ -110,7 +115,16 @@ class UpdateFunctions():
         return Gamma(shape, scale).sample()
 
     def eq_6(self):
-        pass
+        probs = self.forward_backward()
+        np.cumsum(a) = [np.cumsum(prob) for prob in probs]
+        seq = [select_random(random.random(), cumlative) for cumlative in cumlatives]
 
     def eq_7(self, i):
-        pass
+        probs = self.forward_backward()
+        cumlatives = [np.cumsum(prob) for prob in probs]
+        seq = [select_random(random.random(), cumlative) for cumlative in cumlatives]
+
+    def select_random(self, ind, array):
+        for i in xrange(len(array)):
+            if ind >= array[i]: return i
+

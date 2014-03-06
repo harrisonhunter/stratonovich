@@ -6,7 +6,7 @@ def run_system(config_location):
 	config = parse_config('sample.config')
 	params = create_params_object(config)
 	params.set_initial_params()
-	iterations = 1
+	iterations = 10
 	update = UpdateFunctions(params)
 	for i in xrange(iterations):
 		print '**************ITERATION ' + str(i) + ' ******************'
