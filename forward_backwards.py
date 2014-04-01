@@ -3,8 +3,10 @@ from scipy.stats import norm
 
 def forward_backward(transition_probs, means, std, initial_dist, emissions, d):
     def emission_probs(x):
+        # print means, std
         return np.array([norm.pdf(x, loc=means[i], scale=std) for i in xrange(d)])
     forward_dists = forward(transition_probs, emission_probs, initial_dist, emissions)
+    # print forward_dists
     return forward_dists
     # backward_dists = backward(transition_probs, emission_probs, emissions)
     # print backward_dists
@@ -22,8 +24,14 @@ def backward(transition_probs, emission_probs, emissions):
 
 def forward(transition_probs, emission_probs, initial_dist, emissions):
     dists = [initial_dist] 
+    print 'WHAT YOU ARE LOOKING FOR'
+    print transition_probs
+    print emission_probs(0)
+    print np.dot(transition_probs, emission_probs(0))
+    print normalize(dists[-1]*np.dot(transition_probs, emission_probs(0)))
     for emission in emissions:
         dists.append(normalize(dists[-1]*np.dot(transition_probs, emission_probs(emission))))
+    # print dists
     return np.row_stack(dists)
 
 def normalize(array):

@@ -25,8 +25,8 @@ def run_system(config_location):
 		update.params.beta = update.eq_5()
 		update.params.trans = [update.eq_2(i) for i in xrange(update.params.d)]
 		update.params.priors = update.eq_1()
-		# update.params.x = [update.eq_6() if i == 0 else update.eq_7(i) for i in xrange(n)]
-		update.params.x = [choice(xrange(update.params.d)) for i in xrange(update.params.n)]
+		update.params.x = [update.eq_6()] + update.eq_7()
+		# update.params.x = [choice(xrange(update.params.d)) for i in xrange(update.params.n)]
 	return params
 
 run_system('sample.config')

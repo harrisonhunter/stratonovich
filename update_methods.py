@@ -75,8 +75,14 @@ class UpdateFunctions():
     def __init__(self, params):
         self.params = params
 
+    def select_random(self, ind, array):
+        for i in xrange(len(array)):
+            if ind >= array[i]: return i
+
     def forward_backwards(self):
-        return forward_backward(self.params.trans, self.params.means, self.params.sigma, self.params.priors, self.params.ys, self.params.d)
+        print 'in update methods'
+        print self.params.means, self.params.sigma
+        return forward_backward(self.params.trans, self.params.means, self.params.sigma, self.params.priors, self.params.y, self.params.d)
 
     def get_I(self, i):
         return sum([1 if self.params.x[0] == i else 0])
@@ -115,16 +121,16 @@ class UpdateFunctions():
         return Gamma(shape, scale).sample()
 
     def eq_6(self):
-        probs = self.forward_backward()
-        np.cumsum(a) = [np.cumsum(prob) for prob in probs]
-        seq = [select_random(random.random(), cumlative) for cumlative in cumlatives]
-
-    def eq_7(self, i):
-        probs = self.forward_backward()
+        probs = self.forward_backwards()
         cumlatives = [np.cumsum(prob) for prob in probs]
-        seq = [select_random(random.random(), cumlative) for cumlative in cumlatives]
+        seq = [self.select_random(random.random(), cumlative) for cumlative in cumlatives]
+        return seq[0]
 
-    def select_random(self, ind, array):
-        for i in xrange(len(array)):
-            if ind >= array[i]: return i
-
+    def eq_7(self):
+        probs = self.forward_backwards()
+        # print probs
+        cumlatives = [np.cumsum(prob) for prob in probs]
+        # print cumlatives
+        seq = [self.select_random(random.random(), cumlative) for cumlative in cumlatives]
+        # print seq
+        return seq[1:]
