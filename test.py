@@ -88,6 +88,8 @@ for i in xrange(100):
 	# ys.append(emission)
 	# dists.append(normalize(dists[-1]*trans emission_probs(emission)))
 
+SEE IF WE CAN RECOVER PARAMS NOW THAT WE HAVE GENERATED DATA
+
 print ys
 print dists
 

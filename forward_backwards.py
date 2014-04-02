@@ -23,6 +23,7 @@ def backward(transition_probs, emission_probs, emissions):
     dists.reverse()
     return np.row_stack(dists)
 
+FIX THIS SEE TEST.PY
 def forward(transition_probs, emission_probs, initial_dist, emissions):
     dists = [initial_dist] 
     # print 'WHAT YOU ARE LOOKING FOR'
