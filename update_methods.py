@@ -76,8 +76,27 @@ class UpdateFunctions():
         self.params = params
 
     def select_random(self, ind, array):
+        print ind, array
+        if ind < array[0]:
+            # print "here"
+            # print 0
+            return 0
         for i in xrange(len(array)):
-            if ind >= array[i]: return i
+            if ind >= array[i]:
+                if i != len(array) - 1:
+                    if ind < array[i+1]:
+                        # print "there?"
+                        # print i
+                        return i
+                    else:
+                        continue
+                else:
+                    # print "maybe?"
+                    # print i
+                    return i
+        # print "nah"
+        # print len(array) - 1
+        return len(array) - 1
 
     def forward_backwards(self):
         print 'in update methods'
@@ -111,6 +130,7 @@ class UpdateFunctions():
 
     def eq_4(self):
         shape = self.params.alpha + self.params.n / 2.0
+        # print self.params.x
         a = sum([(self.params.y[k] - self.params.means[self.params.x[k]])**2 for k in xrange(1, self.params.n)])
         scale = self.params.beta + a / 2.0
         return Gamma(shape, scale).sample()
@@ -128,9 +148,10 @@ class UpdateFunctions():
 
     def eq_7(self):
         probs = self.forward_backwards()
-        # print probs
+        print "PROBS    !!!!"
+        print probs
         cumlatives = [np.cumsum(prob) for prob in probs]
-        # print cumlatives
+        # print sum(cumlatives)
         seq = [self.select_random(random.random(), cumlative) for cumlative in cumlatives]
         # print seq
         return seq[1:]

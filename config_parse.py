@@ -54,12 +54,17 @@ def parse_config(path_to_config):
 	content = [int(content[i]) if i in [2, 3, 7] else [int(i) for i in content[4].split(',')] if i ==4 else content[i] for i in xrange(len(content))]
 	return dict(zip(config_fields, content))
 
-def load_data(config, n):
-	return [choice(xrange(config['h_states'])) for i in xrange(n)]
+def load_data(config, n=1000, test=True):
+	# return [3 for _ in xrange(n)]
+	if test:
+		return [choice(xrange(config['h_states'])) for i in xrange(n)]
+	else:
+		pass
 
 def create_params_object(config):
 	n = 1000
 	ys = load_data(config, n)
+	# print ys
 	params = Parameters(config, ys, n)
 	return params
 	

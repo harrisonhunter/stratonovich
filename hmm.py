@@ -21,12 +21,11 @@ def run_system(config_location):
 		print '*----TRANS-----*'
 		print update.params.trans
 		update.params.means = [update.eq_3(i) for i in xrange(update.params.d)]
-		update.params.sigma = update.eq_4()**(-1.0/2)
+		update.params.sigma = update.eq_4()**(-1.0/2) + 1
 		update.params.beta = update.eq_5()
 		update.params.trans = [update.eq_2(i) for i in xrange(update.params.d)]
 		update.params.priors = update.eq_1()
 		update.params.x = [update.eq_6()] + update.eq_7()
-		# update.params.x = [choice(xrange(update.params.d)) for i in xrange(update.params.n)]
 	return params
 
-run_system('sample.config')
+# run_system('sample.config')
