@@ -75,28 +75,38 @@ class UpdateFunctions():
     def __init__(self, params):
         self.params = params
 
-    def select_random(self, ind, array):
-        print ind, array
-        if ind < array[0]:
-            # print "here"
-            # print 0
-            return 0
-        for i in xrange(len(array)):
-            if ind >= array[i]:
-                if i != len(array) - 1:
-                    if ind < array[i+1]:
-                        # print "there?"
-                        # print i
-                        return i
-                    else:
-                        continue
-                else:
-                    # print "maybe?"
-                    # print i
-                    return i
-        # print "nah"
-        # print len(array) - 1
-        return len(array) - 1
+    # def select_random(self, ind, array):
+    #     print ind, array
+    #     if ind < array[0]:
+    #         # print "here"
+    #         # print 0
+    #         return 0
+    #     for i in xrange(len(array)):
+    #         if ind >= array[i]:
+    #             if i != len(array) - 1:
+    #                 if ind < array[i+1]:
+    #                     # print "there?"
+    #                     # print i
+    #                     return i
+    #                 else:
+    #                     continue
+    #             else:
+    #                 # print "maybe?"
+    #                 # print i
+    #                 return i
+    #     # print "nah"
+    #     # print len(array) - 1
+    #     return len(array) - 1
+    def select_random(self, choices):
+    # print choices
+    # total = sum(w for w in choices)
+    # r = random.random()
+        upto = 0
+        for i in xrange(len(choices)):
+            if upto + choices[i] >= random.random():
+                return i
+            upto += choices[i]
+        assert False, "Shouldn't get here"
 
     def forward_backwards(self):
         print 'in update methods'
@@ -113,6 +123,9 @@ class UpdateFunctions():
         return sum([1 for k in xrange(self.params.n) if self.params.x[k-1] == i and self.params.x[k] == j])
 
     def get_s(self, i):
+        print "*** GET S ***"
+        print len(self.params.y)
+        print self.params.n
         return sum([self.params.y[k] for k in xrange(self.params.n) if self.params.x[k] == i])
 
     def eq_1(self):
@@ -142,16 +155,16 @@ class UpdateFunctions():
 
     def eq_6(self):
         probs = self.forward_backwards()
-        cumlatives = [np.cumsum(prob) for prob in probs]
-        seq = [self.select_random(random.random(), cumlative) for cumlative in cumlatives]
+        # cumlatives = [np.cumsum(prob) for prob in probs]
+        seq = [self.select_random(prob) for prob in probs]
         return seq[0]
 
     def eq_7(self):
         probs = self.forward_backwards()
         print "PROBS    !!!!"
         print probs
-        cumlatives = [np.cumsum(prob) for prob in probs]
+        # cumlatives = [np.cumsum(prob) for prob in probs]
         # print sum(cumlatives)
-        seq = [self.select_random(random.random(), cumlative) for cumlative in cumlatives]
+        seq = [self.select_random(prob) for prob in probs]
         # print seq
         return seq[1:]

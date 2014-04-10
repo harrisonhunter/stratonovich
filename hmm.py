@@ -28,4 +28,4 @@ def run_system(config_location):
 		update.params.x = [update.eq_6()] + update.eq_7()
 	return params
 
-# run_system('sample.config')
+run_system('sample.config')

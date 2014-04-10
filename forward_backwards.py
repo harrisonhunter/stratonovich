@@ -2,11 +2,11 @@ import numpy as np
 from scipy.stats import norm
 
 def forward_backward(transition_probs, means, std, initial_dist, emissions, d):
-    def emission_probs(x):
+    def emission_probs(x, state):
         # print "mu std"
         # print means, std
-        return np.array([norm.pdf(x, loc=means[i], scale=std) for i in xrange(d)])
-    forward_dists = forward(transition_probs, emission_probs, initial_dist, emissions)
+        return norm.pdf(x, loc=means[state], scale=std)
+    forward_dists = forward(transition_probs, emission_probs, initial_dist, emissions, d)
     # print forward_dists
     return forward_dists
     # backward_dists = backward(transition_probs, emission_probs, emissions)
@@ -23,19 +23,28 @@ def backward(transition_probs, emission_probs, emissions):
     dists.reverse()
     return np.row_stack(dists)
 
-FIX THIS SEE TEST.PY
-def forward(transition_probs, emission_probs, initial_dist, emissions):
+def forward(transition_probs, emission_probs, initial_dist, emissions, d):
     dists = [initial_dist] 
     # print 'WHAT YOU ARE LOOKING FOR'
     # print transition_probs
     # print emission_probs(0)
     # print np.dot(transition_probs, emission_probs(0))
     # print normalize(dists[-1]*np.dot(transition_probs, emission_probs(0)))
-    for emission in emissions:
-        dists.append(normalize(dists[-1]*np.dot(transition_probs, emission_probs(emission))))
+    # for emission in emissions:
+        # dists.append(normalize(dists[-1]*np.dot(transition_probs, emission_probs(emission))))
     # print dists
     # print dists
-    return np.row_stack(dists)
+    # return np.row_stack(dists)
+    for i, emission in enumerate(emissions):
+        dist = []
+        for st in xrange(d):
+            if i == 0:
+                prev_sum = dists[-1][st]
+            else:
+                prev_sum = sum([dists[-1][k]*transition_probs[k][st] for k in xrange(d)])
+            dist.append(emission_probs(emission, st) * prev_sum)
+    dists.append(normalize(dist))
+    return dists
 
 def normalize(array):
     return array / sum(array)
