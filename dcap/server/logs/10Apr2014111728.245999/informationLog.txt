@@ -1,0 +1,28 @@
+10 Apr 2014 11:17:28Listening for clients
+10 Apr 2014 11:17:28EVOServer: Listener: Accepting connections on port 4444
+10 Apr 2014 11:17:31New connection from ('127.0.0.1', 54389)
+10 Apr 2014 11:17:31Received a requestTaskmessage from client: ('127.0.0.1', 54389)
+10 Apr 2014 11:17:31sent demotask,./server/tasks/demotask.py,./server/tasks/demotaskdatato ('127.0.0.1', 54389)
+10 Apr 2014 11:17:44New connection from ('127.0.0.1', 54393)
+10 Apr 2014 11:17:44Received a requestTaskmessage from client: ('127.0.0.1', 54393)
+10 Apr 2014 11:17:44sent demotask,./server/tasks/demotask.py,./server/tasks/demotaskdatato ('127.0.0.1', 54393)
+10 Apr 2014 11:18:31Received a resultmessage from client: ('127.0.0.1', 54389)
+10 Apr 2014 11:18:31Client ('127.0.0.1', 54389) completed his task
+10 Apr 2014 11:18:31Successfuly stored result for task: demotask,./server/tasks/demotask.py,./server/tasks/demotaskdata
+10 Apr 2014 11:18:31sent demotask,./server/tasks/demotask.py,./server/tasks/demotaskdatato ('127.0.0.1', 54389)
+10 Apr 2014 11:18:44Received a resultmessage from client: ('127.0.0.1', 54393)
+10 Apr 2014 11:18:44Client ('127.0.0.1', 54393) completed his task
+10 Apr 2014 11:18:44The following taskname is not unique: demotask the taskname was stored as: demotask1
+10 Apr 2014 11:18:44Successfuly stored result for task: demotask,./server/tasks/demotask.py,./server/tasks/demotaskdata
+10 Apr 2014 11:18:44sent demotask,./server/tasks/demotask.py,./server/tasks/demotaskdatato ('127.0.0.1', 54393)
+10 Apr 2014 11:19:31Received a resultmessage from client: ('127.0.0.1', 54389)
+10 Apr 2014 11:19:31Client ('127.0.0.1', 54389) completed his task
+10 Apr 2014 11:19:31The following taskname is not unique: demotask the taskname was stored as: demotask2
+10 Apr 2014 11:19:31Successfuly stored result for task: demotask,./server/tasks/demotask.py,./server/tasks/demotaskdata
+10 Apr 2014 11:19:31sent demotask,./server/tasks/demotask.py,./server/tasks/demotaskdatato ('127.0.0.1', 54389)
+10 Apr 2014 11:19:44Received a resultmessage from client: ('127.0.0.1', 54393)
+10 Apr 2014 11:19:44Client ('127.0.0.1', 54393) completed his task
+10 Apr 2014 11:19:44The following taskname is not unique: demotask the taskname was stored as: demotask3
+10 Apr 2014 11:19:44Successfuly stored result for task: demotask,./server/tasks/demotask.py,./server/tasks/demotaskdata
+10 Apr 2014 11:19:44Client ('127.0.0.1', 54393) requested a task, but all tasks are done
+10 Apr 2014 11:19:44Done sending tasks to ('127.0.0.1', 54393)

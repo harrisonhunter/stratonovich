@@ -1,0 +1,1 @@
+demotask,./server/tasks/demotask.py,./server/tasks/demotaskdata

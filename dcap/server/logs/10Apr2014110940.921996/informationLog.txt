@@ -1,0 +1,10 @@
+10 Apr 2014 11:09:41Listening for clients
+10 Apr 2014 11:09:41EVOServer: Listener: Accepting connections on port 4444
+10 Apr 2014 11:09:57New connection from ('127.0.0.1', 54214)
+10 Apr 2014 11:09:57Received a requestTaskmessage from client: ('127.0.0.1', 54214)
+10 Apr 2014 11:09:57sent demotask,./server/tasks/demotask.py,./server/tasks/demotaskdatato ('127.0.0.1', 54214)
+10 Apr 2014 11:09:57Received a resultmessage from client: ('127.0.0.1', 54214)
+10 Apr 2014 11:09:57Client ('127.0.0.1', 54214) completed his task
+10 Apr 2014 11:09:57Successfuly stored result for task: demotask,./server/tasks/demotask.py,./server/tasks/demotaskdata
+10 Apr 2014 11:09:57Client ('127.0.0.1', 54214) requested a task, but all tasks are done
+10 Apr 2014 11:09:57Done sending tasks to ('127.0.0.1', 54214)
