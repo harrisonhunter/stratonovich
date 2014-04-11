@@ -28,38 +28,27 @@ ys = []
 dists = [init]
 
 def emission_probs(obs, state):
-    # print norm.pdf(obs, loc=means[state], scale=std)
     return norm.pdf(obs, loc=means[state], scale=std)
 
 def normalize(array):
     summed = float(sum(array))
     return [i/summed for i in array]
-    # return array / sum(array)
 
 def select_random(ind, array):
-    # print ind, array
     if ind < array[0]:
-        # print "here"
         return 0
     for i in xrange(len(array)):
         if ind >= array[i]:
             if i != len(array) - 1:
                 if ind < array[i+1]:
-                    # print "this one"
-                    # print 
                     return i + 1
                 else:
                     continue
             else:
-                # print "here"
                 return i
-    # print "end"
     return len(array) - 1
 
 def select_random(choices):
-    # print choices
-    # total = sum(w for w in choices)
-    # r = random.random()
     upto = 0
     for i in xrange(len(choices)):
         if upto + choices[i] >= random.random():
@@ -68,28 +57,32 @@ def select_random(choices):
     assert False, "Shouldn't get here"
 
 
+if __name__ == "__main__":
+    for i in xrange(1000):
+        dist = []
+        emission = random.gauss(means[select_random(dists[-1])], std)
+        ys.append(emission)
+        for st in xrange(d):
+            if i == 0:
+                prev_sum = dists[-1][st]
+            else:
+                prev_sum = sum([dists[-1][k]*trans[k][st] for k in xrange(d)])
+            dist.append(emission_probs(emission, st) * prev_sum)
+        dists.append(normalize(dist))
 
-for i in xrange(100):
-    # print dists
-    dist = []
-    emission = random.gauss(means[select_random(dists[-1])], std)
-    ys.append(emission)
-    for st in xrange(d):
-        if i == 0:
-            prev_sum = dists[-1][st]
-        else:
-            prev_sum = sum([dists[-1][k]*trans[k][st] for k in xrange(d)])
-        # print d, prev_sum
-        dist.append(emission_probs(emission, st) * prev_sum)
-    dists.append(normalize(dist))
-
- #    cumlatives = [np.cumsum(prob) for prob in dists[-1]]
-	# emission = select_random(dists[-1])
-	# ys.append(emission)
-	# dists.append(normalize(dists[-1]*trans emission_probs(emission)))
-
-SEE IF WE CAN RECOVER PARAMS NOW THAT WE HAVE GENERATED DATA
-
-print ys
-print dists
+    with open('test_data.txt', 'w') as f:
+        for y in ys:
+            f.write(str(y) + '\n')
+    params = hmm.run_system('test.config', 1000, False)
+    end = [0 for _ in xrange(3)]
+    num_dists = len(dists)
+    for dist in dists:
+        for i, x in enumerate(dist):
+            end[i] += x / num_dists 
+    print "avg dist:"
+    print end
+    print "end means"
+    print params.means
+    print "end trans"
+    print params.trans
 
