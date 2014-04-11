@@ -34,14 +34,3 @@ def forward(transition_probs, emission_probs, initial_dist, emissions, d):
 
 def normalize(array):
     return array / sum(array)
-
-# wiki_means = np.array([0.9, 0.1])
-# wiki_std = 1
-# wiki_initial_dist = np.array([0.5, 0.5])
-# wiki_emissions = [0, 0, 1, 0, 0, 1, 1, 0]
-# wiki_transition_probs = np.array([[0.7, 0.3], [0.3, 0.7]])
-
-# if __name__ == "__main__":
-#     # print(forward(wiki_transition_probs, wiki_emission_probs, wiki_initial_dist, wiki_emissions))
-#     # print(backward(wiki_transition_probs, wiki_emission_probs, wiki_emissions))
-#     print(forward_backward(wiki_transition_probs, wiki_means, wiki_std, wiki_initial_dist, wiki_emissions, 2))

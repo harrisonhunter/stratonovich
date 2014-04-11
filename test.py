@@ -10,45 +10,32 @@ import numpy as np
 import random
 from scipy.stats import norm
 
+'''
+Data for initialization, used for regen
+'''
 d = 3
-
 trans = [
 	[0.6, 0.3, 0.1],
 	[0.1, 0.8, 0.1],
 	[0.1, 0.3, 0.6]
 ]
-
 means = [-2, 0, 2]
-
 std = 1
-
 init = [.2, .6, .2]
-
 ys = []
 dists = [init]
 
 def emission_probs(obs, state):
+    ''' Prob density of observing obs given the current state'''
     return norm.pdf(obs, loc=means[state], scale=std)
 
 def normalize(array):
+    '''normalize and array'''
     summed = float(sum(array))
     return [i/summed for i in array]
 
-def select_random(ind, array):
-    if ind < array[0]:
-        return 0
-    for i in xrange(len(array)):
-        if ind >= array[i]:
-            if i != len(array) - 1:
-                if ind < array[i+1]:
-                    return i + 1
-                else:
-                    continue
-            else:
-                return i
-    return len(array) - 1
-
 def select_random(choices):
+    '''pick a random element from a weighted list (pdf) (probs sum to i)'''
     upto = 0
     for i in xrange(len(choices)):
         if upto + choices[i] >= random.random():
@@ -56,7 +43,7 @@ def select_random(choices):
         upto += choices[i]
     assert False, "Shouldn't get here"
 
-
+'''Run tests'''
 if __name__ == "__main__":
     for i in xrange(1000):
         dist = []

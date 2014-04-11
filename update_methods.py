@@ -84,8 +84,6 @@ class UpdateFunctions():
         assert False, "Shouldn't get here"
 
     def forward_backwards(self):
-        # print 'in update methods'
-        # print self.params.means, self.params.sigma
         return forward_backward(self.params.trans, self.params.means, self.params.sigma, self.params.priors, self.params.y, self.params.d)
 
     def get_I(self, i):

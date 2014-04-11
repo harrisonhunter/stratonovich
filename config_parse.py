@@ -68,14 +68,3 @@ def create_params_object(config, test=True):
     if not test: n = len(ys)
     params = Parameters(config, ys, n)
     return params
-    
-
-# config = parse_config('sample.config')
-# prsint config
-# params = create_params_object(config)
-# params.set_initial_params()
-# print params.priors
-# print params.beta
-# print params.sigma
-# print params.means
-# print params.trans
