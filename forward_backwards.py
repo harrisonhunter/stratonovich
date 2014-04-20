@@ -33,4 +33,5 @@ def forward(transition_probs, emission_probs, initial_dist, emissions, d):
     return dists
 
 def normalize(array):
+    # print array
     return array / sum(array)

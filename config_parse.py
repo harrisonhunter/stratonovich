@@ -44,6 +44,7 @@ class Parameters:
         self.priors = self.init_priors.sample()
         self.beta = self.init_beta.sample()
         self.sigma = self.init_root_sigma.sample() ** (-1.0/2)
+        print "starting stds = " + str(self.sigma)
         self.means = [self.init_means.sample() for i in xrange(self.d)]
         self.trans = [self.init_trans[i].sample() for i in xrange(self.d)]
 

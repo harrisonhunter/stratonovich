@@ -81,6 +81,8 @@ class UpdateFunctions():
             if upto + choices[i] >= random.random():
                 return i
             upto += choices[i]
+        if upto > 0:
+            return i
         assert False, "Shouldn't get here"
 
     def forward_backwards(self):
@@ -113,14 +115,17 @@ class UpdateFunctions():
 
     def eq_4(self):
         shape = self.params.alpha + self.params.n / 2.0
-        a = sum([(self.params.y[k] - self.params.means[self.params.x[k]])**2 for k in xrange(1, self.params.n)])
+        print "shape = " + str(shape)
+        a = sum([(self.params.y[k] - self.params.means[self.params.x[k]])**2 for k in xrange(1, self.params.n)]) / float(self.params.n)
         scale = self.params.beta + a / 2.0
-        return Gamma(shape, scale).sample()
+        print "scale = " + str(scale)
+        print "comp = " + str(shape / scale)
+        return (1.0 / Gamma(shape, 1.0 / scale).sample())**(0.5)
 
     def eq_5(self):
         shape = self.params.g + self.params.alpha
         scale = self.params.h + self.params.sigma**-2
-        return Gamma(shape, scale).sample()
+        return Gamma(shape, 1.0 / scale).sample()
 
     def eq_6(self):
         probs = self.forward_backwards()

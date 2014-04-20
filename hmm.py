@@ -23,10 +23,11 @@ def run_system(config_location, iterations, test, verbose=False):
 			print update.params.trans
 		else:
 			print '**************ITERATION ' + str(i) + ' ******************'
-		update.params.means = [update.eq_3(i) for i in xrange(update.params.d)]
-		update.params.sigma = update.eq_4()**(-1.0/2) + 1
+		update.params.means = [update.eq_3(j) for j in xrange(update.params.d)]
+		update.params.sigma = update.eq_4() #+ 1
+		print "Std at iteration " + str(i) + " is " + str(update.params.sigma)
 		update.params.beta = update.eq_5()
-		update.params.trans = [update.eq_2(i) for i in xrange(update.params.d)]
+		update.params.trans = [update.eq_2(j) for j in xrange(update.params.d)]
 		update.params.priors = update.eq_1()
 		update.params.x = [update.eq_6()] + update.eq_7()
 	return params

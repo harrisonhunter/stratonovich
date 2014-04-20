@@ -11,7 +11,7 @@ import random
 from scipy.stats import norm
 
 '''
-Data for initialization, used for regen
+Data for initialization, used for regen testing
 '''
 d = 3
 trans = [
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     with open('test_data.txt', 'w') as f:
         for y in ys:
             f.write(str(y) + '\n')
-    params = hmm.run_system('test.config', 1000, False)
+    params = hmm.run_system('test.config', 100, False)
     end = [0 for _ in xrange(3)]
     num_dists = len(dists)
     for dist in dists:
@@ -72,4 +72,10 @@ if __name__ == "__main__":
     print params.means
     print "end trans"
     print params.trans
+    print "end priors"
+    print params.init_priors.sample()
+    print "end beta"
+    print params.init_beta.sample()
+    print "end stds"
+    print params.sigma
 
