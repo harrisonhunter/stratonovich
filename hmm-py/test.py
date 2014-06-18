@@ -4,11 +4,12 @@
 3. Train a model on that data
 4. See if params are recovered
 '''
-
+# ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future python setup.py build
 import hmm
 import numpy as np
 import random
 from scipy.stats import norm
+import fib
 
 '''
 Data for initialization, used for regen testing
@@ -44,7 +45,7 @@ def select_random(choices):
     assert False, "Shouldn't get here"
 
 '''Run tests'''
-if __name__ == "__main__":
+if __name__ == "__main__":    
     for i in xrange(1000):
         dist = []
         emission = random.gauss(means[select_random(dists[-1])], std)

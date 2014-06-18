@@ -11,6 +11,7 @@ import random
 import numpy as np
 import numpy.random as npr
 from forward_backwards import forward_backward
+from time import time
 
 class Normal:
     def __init__(self, init_mean, init_std):
@@ -42,18 +43,18 @@ class Dirichlet:
         '''
         return npr.dirichlet(self.alpha, size=None)
 
-class Weibull:
-    def __init__(self, init_a):
-        self.a = init_a
+# class Weibull:
+#     def __init__(self, init_a):
+#         self.a = init_a
 
-    def sample(self):
-        ''' a : float
-        Shape of the distribution.
-        size : tuple of ints
-        Output shape. If the given shape is, e.g., (m, n, k),
-        then m * n * k samples are drawn.
-        '''
-        return npr.weibull(self.a, size=None)
+#     def sample(self):
+#         ''' a : float
+#         Shape of the distribution.
+#         size : tuple of ints
+#         Output shape. If the given shape is, e.g., (m, n, k),
+#         then m * n * k samples are drawn.
+#         '''
+#         return npr.weibull(self.a, size=None)
 
 class Gamma:
     def __init__(self, init_shape, init_scale):
@@ -102,37 +103,38 @@ class UpdateFunctions():
 
     def eq_1(self):
         Is = [self.get_I(i) for i in xrange(self.params.d)]
-        return Dirichlet([Is[i] + 1 for i in xrange(self.params.d)]).sample()
+        return npr.dirichlet([Is[i] + 1 for i in xrange(self.params.d)])
 
     def eq_2(self, i):
         ns = [self.get_n_trans(i, j) for j in xrange(self.params.d)]
-        return Dirichlet([ns[j] + 1 for j in xrange(self.params.d)]).sample()
+        return npr.dirichlet([ns[j] + 1 for j in xrange(self.params.d)])
 
     def eq_3(self, i):
         mean = (self.get_s(i) + self.params.k * self.params.epsilon * self.params.sigma**2) / (1.0 * self.get_n(i) + self.params.k * self.params.sigma**2)
         std = (self.params.sigma**2) / (self.get_n(i) + self.params.k * self.params.sigma**2)
-        return Normal(mean, std).sample()
+        return npr.normal(mean, std, size=None)
 
     def eq_4(self):
         shape = self.params.alpha + self.params.n / 2.0
-        print "shape = " + str(shape)
-        a = sum([(self.params.y[k] - self.params.means[self.params.x[k]])**2 for k in xrange(1, self.params.n)]) / float(self.params.n)
+        a = sum([(self.params.y[k] - self.params.means[self.params.x[k]])**2 for k in xrange(1, self.params.n)])
         scale = self.params.beta + a / 2.0
-        print "scale = " + str(scale)
-        print "comp = " + str(shape / scale)
-        return (1.0 / Gamma(shape, 1.0 / scale).sample())**(0.5)
+        return (1.0 / npr.gamma(shape, 1.0 / scale, size=None))**(0.5)
 
     def eq_5(self):
         shape = self.params.g + self.params.alpha
         scale = self.params.h + self.params.sigma**-2
-        return Gamma(shape, 1.0 / scale).sample()
+        return npr.gamma(shape, 1.0 / scale, size=None)
 
     def eq_6(self):
+        t1 = time()
         probs = self.forward_backwards()
         seq = [self.select_random(prob) for prob in probs]
-        return seq[0]
+        print "eq_6 time = " + str(time() - t1)
+        return seq #seq[0]
 
     def eq_7(self):
+        t2 = time()
         probs = self.forward_backwards()
         seq = [self.select_random(prob) for prob in probs]
+        print "eq_7 time = " + str(time() - t2)
         return seq[1:]

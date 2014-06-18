@@ -1,6 +1,7 @@
 from config_parse import parse_config, create_params_object
 from update_methods import UpdateFunctions
 from random import choice
+from time import time
 
 def run_system(config_location, iterations, test, verbose=False):
 	'''Code to run the hmm system'''
@@ -24,12 +25,13 @@ def run_system(config_location, iterations, test, verbose=False):
 		else:
 			print '**************ITERATION ' + str(i) + ' ******************'
 		update.params.means = [update.eq_3(j) for j in xrange(update.params.d)]
-		update.params.sigma = update.eq_4() #+ 1
-		print "Std at iteration " + str(i) + " is " + str(update.params.sigma)
+		update.params.sigma = update.eq_4() # + 1
 		update.params.beta = update.eq_5()
 		update.params.trans = [update.eq_2(j) for j in xrange(update.params.d)]
 		update.params.priors = update.eq_1()
-		update.params.x = [update.eq_6()] + update.eq_7()
+		t1 = time()
+		update.params.x = update.eq_6()
+		print "time for updating x" + str(time() - t1)
 	return params
 
 #Usage
